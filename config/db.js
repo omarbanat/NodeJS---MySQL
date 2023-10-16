@@ -5,14 +5,14 @@ const DATABASE_USER = process.env.DATABASE_USER;
 const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD;
 const DATABASE_NAME = process.env.DATABASE_NAME;
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
   host: DATABASE_HOST,
   user: DATABASE_USER,
   password: DATABASE_PASSWORD,
   database: DATABASE_NAME,
 });
 
-connection.connect((err) => {
+connection.getConnection((err) => {
   if (err) {
     console.log(err);
     return;
@@ -20,4 +20,4 @@ connection.connect((err) => {
   console.log('connected successfully');
 });
 
-module.exports = connection;
+module.exports = connection.promise();
